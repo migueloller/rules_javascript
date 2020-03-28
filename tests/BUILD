@@ -17,6 +17,7 @@ sh_test(
 js_library(
     name = "baz",
     srcs = ["baz.js"],
+    data = ["qux.js"],
 )
 
 js_library(

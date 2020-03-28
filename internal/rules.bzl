@@ -24,6 +24,9 @@ def _nodejs_binary_impl(ctx):
         runfiles = runfiles.merge(ctx.runfiles(
             transitive_files = dep[JsLibraryInfo].deps,
         ))
+        runfiles = runfiles.merge(ctx.runfiles(
+            transitive_files = dep[JsLibraryInfo].data,
+        ))
 
     return [DefaultInfo(
         files = depset([bin]),
@@ -43,16 +46,23 @@ nodejs_binary = rule(
 )
 
 def _js_library_impl(ctx):
-    return [JsLibraryInfo(deps = depset(
-        ctx.files.srcs,
-        transitive = [dep[JsLibraryInfo].deps for dep in ctx.attr.deps],
-    ))]
+    return [JsLibraryInfo(
+        deps = depset(
+            ctx.files.srcs,
+            transitive = [dep[JsLibraryInfo].deps for dep in ctx.attr.deps],
+        ),
+        data = depset(
+            ctx.files.data,
+            transitive = [dep[JsLibraryInfo].data for dep in ctx.attr.deps],
+        ),
+    )]
 
 js_library = rule(
     _js_library_impl,
     attrs = {
         "srcs": attr.label_list(allow_files = [".js"]),
         "deps": attr.label_list(providers = [JsLibraryInfo]),
+        "data": attr.label_list(allow_files = True),
     },
     provides = [JsLibraryInfo],
 )
