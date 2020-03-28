@@ -1,0 +1,1 @@
+JsLibraryInfo = provider()
