@@ -4,6 +4,14 @@ load(":providers.bzl", "JsLibraryInfo")
 def _nodejs_binary_impl(ctx):
     srcs = ctx.files.srcs
     entry_point = ctx.file.entry_point
+
+    if entry_point not in srcs:
+        fail(
+            "could not find '{entry_point}'"
+                .format(entry_point = entry_point.basename) +
+            "as specified by 'entry_point' attribute",
+        )
+
     bin = ctx.actions.declare_file(
         ctx.label.name,
         sibling = entry_point,
