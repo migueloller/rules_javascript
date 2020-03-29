@@ -1,4 +1,4 @@
-load("//:def.bzl", "js_library", "nodejs_binary")
+load("//javascript:def.bzl", "js_library", "nodejs_binary")
 
 nodejs_binary(
     name = "hello",

@@ -1,10 +1,10 @@
 load(
-    "//internal:rules.bzl",
+    "//javascript/private:rules.bzl",
     _js_library = "js_library",
     _nodejs_binary = "nodejs_binary",
 )
 load(
-    "//internal:providers.bzl",
+    "//javascript/private:providers.bzl",
     _JsLibraryInfo = "JsLibraryInfo",
 )
 
