@@ -2,8 +2,10 @@ load("//:def.bzl", "js_library", "nodejs_binary")
 
 nodejs_binary(
     name = "hello",
-    srcs = ["hello.js"],
-    data = ["message.js"],
+    srcs = [
+        "hello.js",
+        "message.js",
+    ],
     entry_point = "hello.js",
 )
 
@@ -17,7 +19,6 @@ sh_test(
 js_library(
     name = "baz",
     srcs = ["baz.js"],
-    data = ["qux.js"],
 )
 
 js_library(
@@ -47,4 +48,25 @@ sh_test(
     srcs = ["bin_with_libs_test.sh"],
     args = ["$(rootpath :bin_with_libs)"],
     data = [":bin_with_libs"],
+)
+
+js_library(
+    name = "list_data_lib",
+    srcs = ["list_data_lib.js"],
+    data = ["bar.txt"],
+)
+
+nodejs_binary(
+    name = "list_data_bin",
+    srcs = ["list_data_bin.js"],
+    data = ["foo.txt"],
+    entry_point = "list_data_bin.js",
+    deps = [":list_data_lib"],
+)
+
+sh_test(
+    name = "data_test",
+    srcs = ["data_test.sh"],
+    args = ["$(rootpath :list_data_bin)"],
+    data = [":list_data_bin"],
 )

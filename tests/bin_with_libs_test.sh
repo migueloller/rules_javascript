@@ -6,9 +6,7 @@ program="$1"
 got=$("$program")
 want="foo
 bar
-qux
 baz
-qux
 baz"
 
 if [ "$got" != "$want" ]; then
