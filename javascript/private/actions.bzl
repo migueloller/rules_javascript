@@ -1,6 +1,6 @@
 load("@bazel_skylib//lib:shell.bzl", "shell")
 
-def nodejs_link(ctx, bin, entry_point):
+def js_link(ctx, bin, entry_point):
     cmd = """cat << EOF > {bin}
 #!/bin/bash
 

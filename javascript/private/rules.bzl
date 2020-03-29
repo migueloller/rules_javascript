@@ -1,4 +1,4 @@
-load(":actions.bzl", "nodejs_link")
+load(":actions.bzl", "js_link")
 load(":providers.bzl", "JsLibraryInfo")
 
 def _js_binary_impl(ctx):
@@ -17,7 +17,7 @@ def _js_binary_impl(ctx):
         sibling = entry_point,
     )
 
-    nodejs_link(ctx, entry_point = entry_point, bin = bin)
+    js_link(ctx, entry_point = entry_point, bin = bin)
 
     runfiles = ctx.runfiles(files = srcs + ctx.files.data)
     for dep in ctx.attr.deps:
