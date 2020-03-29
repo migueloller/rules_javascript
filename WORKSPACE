@@ -1,5 +1,5 @@
-workspace(name = "rules_js")
+workspace(name = "rules_javascript")
 
-load("@rules_js//:deps.bzl", "js_rules_dependencies")
+load("@rules_javascript//javascript:deps.bzl", "javascript_rules_dependencies")
 
-js_rules_dependencies()
+javascript_rules_dependencies()
