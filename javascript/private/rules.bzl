@@ -1,7 +1,7 @@
 load(":actions.bzl", "nodejs_link")
 load(":providers.bzl", "JsLibraryInfo")
 
-def _nodejs_binary_impl(ctx):
+def _js_binary_impl(ctx):
     srcs = ctx.files.srcs
     entry_point = ctx.file.entry_point
 
@@ -34,8 +34,8 @@ def _nodejs_binary_impl(ctx):
         runfiles = runfiles,
     )]
 
-nodejs_binary = rule(
-    _nodejs_binary_impl,
+js_binary = rule(
+    _js_binary_impl,
     attrs = {
         "srcs": attr.label_list(allow_files = [".js"], mandatory = True),
         "entry_point": attr.label(allow_single_file = [".js"], mandatory = True),

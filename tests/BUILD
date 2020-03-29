@@ -1,6 +1,6 @@
-load("//javascript:def.bzl", "js_library", "nodejs_binary")
+load("//javascript:def.bzl", "js_binary", "js_library")
 
-nodejs_binary(
+js_binary(
     name = "hello",
     srcs = [
         "hello.js",
@@ -36,7 +36,7 @@ js_library(
     ],
 )
 
-nodejs_binary(
+js_binary(
     name = "bin_with_libs",
     srcs = ["bin_with_libs.js"],
     entry_point = "bin_with_libs.js",
@@ -56,7 +56,7 @@ js_library(
     data = ["bar.txt"],
 )
 
-nodejs_binary(
+js_binary(
     name = "list_data_bin",
     srcs = ["list_data_bin.js"],
     data = ["foo.txt"],
