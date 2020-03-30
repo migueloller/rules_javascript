@@ -1,1 +1,1 @@
-# Empty BUILD file needed for .bzl files.
+exports_files(["builder/builder.js"])

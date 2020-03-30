@@ -17,7 +17,12 @@ def _js_binary_impl(ctx):
         sibling = entry_point,
     )
 
-    js_link(ctx, entry_point = entry_point, bin = bin)
+    js_link(
+        ctx,
+        executable = ctx.file._builder,
+        bin = bin,
+        entry_point = entry_point,
+    )
 
     runfiles = ctx.runfiles(srcs + ctx.files.data)
     for dep in ctx.attr.deps:
@@ -41,6 +46,10 @@ js_binary = rule(
         "entry_point": attr.label(allow_single_file = [".js"], mandatory = True),
         "data": attr.label_list(allow_files = True),
         "deps": attr.label_list(providers = [JsLibraryInfo]),
+        "_builder": attr.label(
+            allow_single_file = True,
+            default = "//javascript/private:builder/builder.js",
+        ),
     },
     executable = True,
 )

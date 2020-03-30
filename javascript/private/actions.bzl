@@ -1,20 +1,16 @@
-load("@bazel_skylib//lib:shell.bzl", "shell")
+def js_link(ctx, executable, bin, entry_point):
+    args = ctx.actions.args()
+    args.add("link")
+    args.add(entry_point)
+    args.add("-o")
+    args.add(bin)
+    args.add("--")
+    args.add("--preserve-symlinks")
+    args.add("--preserve-symlnks-main")
 
-def js_link(ctx, bin, entry_point):
-    cmd = """cat << EOF > {bin}
-#!/bin/bash
-
-node \\\\
-  --preserve-symlinks \\\\
-  --preserve-symlinks-main \\\\
-  {entry_point}
-EOF""".format(
-        entry_point = shell.quote(entry_point.path),
-        bin = shell.quote(bin.path),
-    )
-
-    ctx.actions.run_shell(
+    ctx.actions.run(
         outputs = [bin],
-        command = cmd,
+        executable = executable,
+        arguments = [args],
         mnemonic = "NodeJsLink",
     )
