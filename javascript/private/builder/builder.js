@@ -1,3 +1,5 @@
+#!/usr/local/bin/node
+
 const link = require('./link')
 
 async function main({ argv: [_execPath, entryPoint, verb, ...args] }) {
