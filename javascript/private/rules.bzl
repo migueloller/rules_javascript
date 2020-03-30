@@ -19,7 +19,7 @@ def _js_binary_impl(ctx):
 
     js_link(ctx, entry_point = entry_point, bin = bin)
 
-    runfiles = ctx.runfiles(files = srcs + ctx.files.data)
+    runfiles = ctx.runfiles(srcs + ctx.files.data)
     for dep in ctx.attr.deps:
         runfiles = runfiles.merge(ctx.runfiles(
             transitive_files = dep[JsLibraryInfo].deps,
