@@ -15,7 +15,6 @@ EOF""".format(
 
     ctx.actions.run_shell(
         outputs = [bin],
-        inputs = [entry_point],
         command = cmd,
         mnemonic = "NodeJsLink",
     )
