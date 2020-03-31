@@ -19,17 +19,20 @@ sh_test(
 js_library(
     name = "baz",
     srcs = ["baz.js"],
+    module_name = "@rules_javasript/baz",
 )
 
 js_library(
     name = "bar",
     srcs = ["bar.js"],
+    module_name = "@rules_javasript/bar",
     deps = [":baz"],
 )
 
 js_library(
     name = "foo",
     srcs = ["foo.js"],
+    module_name = "@rules_javasript/foo",
     deps = [
         ":bar",
         ":baz",
@@ -54,6 +57,7 @@ js_library(
     name = "list_data_lib",
     srcs = ["list_data_lib.js"],
     data = ["bar.txt"],
+    module_name = "@rules_javascript/list_data_lib",
 )
 
 js_binary(

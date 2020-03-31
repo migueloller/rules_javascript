@@ -17,21 +17,23 @@ def _js_binary_impl(ctx):
         sibling = entry_point,
     )
 
+    deps_set = depset(
+        [dep[JsLibraryInfo].info for dep in ctx.attr.deps],
+        transitive = [dep[JsLibraryInfo].deps for dep in ctx.attr.deps],
+    )
+    deps = deps_set.to_list()
+
+    runfiles = ctx.runfiles(srcs + ctx.files.data)
+    for dep in deps:
+        runfiles = runfiles.merge(ctx.runfiles(dep.srcs + dep.data))
+
     js_link(
         ctx,
         executable = ctx.file._builder,
         bin = bin,
         entry_point = entry_point,
+        deps = deps,
     )
-
-    runfiles = ctx.runfiles(srcs + ctx.files.data)
-    for dep in ctx.attr.deps:
-        runfiles = runfiles.merge(ctx.runfiles(
-            transitive_files = dep[JsLibraryInfo].deps,
-        ))
-        runfiles = runfiles.merge(ctx.runfiles(
-            transitive_files = dep[JsLibraryInfo].data,
-        ))
 
     return [DefaultInfo(
         files = depset([bin]),
@@ -56,13 +58,14 @@ js_binary = rule(
 
 def _js_library_impl(ctx):
     return [JsLibraryInfo(
-        deps = depset(
-            ctx.files.srcs,
-            transitive = [dep[JsLibraryInfo].deps for dep in ctx.attr.deps],
+        info = struct(
+            module_name = ctx.attr.module_name,
+            srcs = ctx.files.srcs,
+            data = ctx.files.data,
         ),
-        data = depset(
-            ctx.files.data,
-            transitive = [dep[JsLibraryInfo].data for dep in ctx.attr.deps],
+        deps = depset(
+            [dep[JsLibraryInfo].info for dep in ctx.attr.deps],
+            transitive = [dep[JsLibraryInfo].deps for dep in ctx.attr.deps],
         ),
     )]
 
@@ -70,6 +73,7 @@ js_library = rule(
     _js_library_impl,
     attrs = {
         "srcs": attr.label_list(allow_files = [".js"]),
+        "module_name": attr.string(mandatory = True),
         "deps": attr.label_list(providers = [JsLibraryInfo]),
         "data": attr.label_list(allow_files = True),
     },
