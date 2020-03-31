@@ -1,0 +1,26 @@
+packages = [
+    "foo",
+    "bar",
+]
+
+package_paths = ["packages/%s" % package for package in packages]
+
+workspace(
+    name = "examples_yarn_workspaces",
+    managed_directories = {
+        "@npm": ["%s/node_modules" % path for path in package_paths],
+    },
+)
+
+local_repository(
+    name = "rules_javascript",
+    path = "../..",
+)
+
+load("@rules_javascript//javascript:def.bzl", "yarn_install")
+
+yarn_install(
+    name = "npm",
+    package_json = "//:package.json",
+    yarn_lock = "//:yarn.lock",
+)
