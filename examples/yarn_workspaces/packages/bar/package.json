@@ -2,6 +2,7 @@
   "name": "bar",
   "version": "0.0.0",
   "dependencies": {
+    "baz": "0.0.0",
     "lodash": "^3.10.1"
   }
 }

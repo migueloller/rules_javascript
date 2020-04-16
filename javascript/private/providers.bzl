@@ -1,1 +1,2 @@
 JsLibraryInfo = provider()
+NpmPackageInfo = provider()
