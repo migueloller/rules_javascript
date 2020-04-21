@@ -1,4 +1,4 @@
-let ListDataLib = require('./list_data_lib.js')
+let ListDataLib = require('@rules_javascript/list_data_lib')
 
 async function main() {
   let files = await ListDataLib.listData()

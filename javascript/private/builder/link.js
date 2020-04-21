@@ -6,9 +6,10 @@ let minimist = require('./minimist')
 async function link(args) {
   let {
     o: outFile,
-    _: [entryPoint],
+    _: [entryPoint, ...mappings],
     ['--']: nodeArgs,
   } = minimist(args, { '--': true })
+  console.log(mappings)
   let executableContents = `#!/bin/bash
 
 set -euo pipefail
