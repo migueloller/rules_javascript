@@ -1,1 +1,1 @@
-exports_files(["builder/builder.js"])
+exports_files(["js_tool.sh.tpl"])
